@@ -10,8 +10,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Deebii Payroll">
-<link rel="apple-touch-icon" href="DEEBII LOGO (2).jpg">
-<link rel="icon" type="image/jpeg" href="DEEBII LOGO (2).jpg">
+<link rel="apple-touch-icon" href="DEEBII LOGO.png">
+<link rel="icon" type="image/png" href="DEEBII LOGO.png">
 
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +29,7 @@
   header {
     background-color: #ffffff;
     color: #333;
-    padding: 12px 16px;
+    padding: 10px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -37,6 +37,7 @@
     border-bottom-right-radius: 12px;
     margin-bottom: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    min-height: 95px; /* Logo guddaa simachuuf header bal'isaa */
   }
   .header-logo {
     display: flex;
@@ -44,14 +45,14 @@
     gap: 12px;
   }
   .header-logo img {
-    height: 75px;
+    height: 85px; /* Logo guddatee akka mul'atu ta'ee jira */
     width: auto;
-    max-width: 220px;
+    max-width: 250px;
     object-fit: contain;
     filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));
   }
   .header-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #333;
     font-weight: bold;
   }
@@ -212,9 +213,9 @@
   }
   .footer-logo {
     margin-top: 12px;
-    height: 75px;
+    height: 85px;
     width: auto;
-    max-width: 220px;
+    max-width: 250px;
     object-fit: contain;
     filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));
   }
@@ -223,9 +224,10 @@
   @media (max-width: 420px) {
     body { font-size: 1rem; padding: 0 8px 16px 8px; }
     input { font-size: 1rem; }
-    .header-logo img { height: 60px; }
-    .footer-logo { height: 60px; }
-    .header-title { font-size: 0.95rem; }
+    header { min-height: 75px; padding: 8px 12px; }
+    .header-logo img { height: 65px; }
+    .footer-logo { height: 65px; }
+    .header-title { font-size: 1rem; }
   }
 </style>
 </head>
@@ -233,7 +235,7 @@
 
   <header>
     <div class="header-logo">
-      <img src="DEEBII LOGO (2).jpg" alt="Deebii Logo" onerror="this.style.display='none'">
+      <img src="DEEBII LOGO.png" alt="Deebii Logo" onerror="this.style.display='none'">
       <span class="header-title">Deebii Payroll</span>
     </div>
     <div class="header-actions">
@@ -296,7 +298,7 @@
     <p>Hubachiisa: Yoo kiiboordiin mobaayila keessanii hin mul'anne ta'e, faayilii kana Chrome keessatti banaa. Dirree galtee al tokko tuqaa ykn button "Calculate" cuqaasaa.</p>
     <br>
     <p>Contact: <a href="https://www.deebiitech.com.et" target="_blank">www.deebiitech.com.et</a> | Phone: 0910166955 | Email: kajelahambisa2013@gmail.com</p>
-    <img src="DEEBII LOGO (2).jpg" alt="Deebii Logo" class="footer-logo" onerror="this.style.display='none'"><br>
+    <img src="DEEBII LOGO.png" alt="Deebii Logo" class="footer-logo" onerror="this.style.display='none'"><br>
     <em>Developed by Qajeelaa Hambisaa</em>
   </footer>
 

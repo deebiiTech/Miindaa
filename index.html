@@ -256,7 +256,7 @@
       <p>App'n kun Sirna Herrega Kaffaltii Mindaa (Payroll Calculator) kan dorgomaa hin qabne fi hojii salphisuudhaaf qophaa'eedha.</p>
       <br>
       <h3>Contact Us</h3>
-      <p><strong>Website:</strong><br><a href="https://www.deebiitech.com" target="_blank">www.deebiitech.com</a></p>
+      <p><strong>Website:</strong><br><a href="https://www.deebiitech.com.et" target="_blank">www.deebiitech.com.et</a></p>
       <p><strong>Phone:</strong><br>0910166955</p>
       <p><strong>Email:</strong><br>kajelahambisa2013@gmail.com</p>
     </div>
@@ -291,7 +291,7 @@
   <footer>
     <p>Hubachiisa: Yoo kiiboordiin mobaayila keessanii hin mul'anne ta'e, faayilii kana Chrome keessatti banaa. Dirree galtee al tokko tuqaa ykn button "Calculate" cuqaasaa.</p>
     <br>
-    <p>Contact: <a href="https://www.deebiitech.com.et" target="_blank">www.deebiitech.com</a> | Phone: 0910166955 | Email: kajelahambisa2013@gmail.com</p>
+    <p>Contact: <a href="https://www.deebiitech.com.et" target="_blank">www.deebiitech.com.et</a> | Phone: 0910166955 | Email: kajelahambisa2013@gmail.com</p>
     <img src="DEEBII LOGO.png" alt="Deebii Logo" class="footer-logo" onerror="this.style.display='none'"><br>
     <em>Developed by Qajeelaa Hambisaa</em>
   </footer>
@@ -304,15 +304,15 @@
 
     function round2(x){ return Math.round((x + Number.EPSILON) * 100) / 100 }
 
+    // Table fakkii haaraa kenname irratti hundaa'uun sirreessuu
     function taxFromBrackets(income){
       if(isNaN(income) || income === null) return 0;
-      if(income <= 600) return 0;
-      if(income <= 1650) return income * 0.10 - 60;
-      if(income <= 3200) return income * 0.15 - 142.5;
-      if(income <= 5250) return income * 0.20 - 302.5;
-      if(income <= 7800) return income * 0.25 - 565;
-      if(income <= 10900) return income * 0.30 - 955;
-      return income * 0.35 - 1500;
+      if(income <= 2000) return 0;
+      if(income <= 4000) return income * 0.15 - 300;
+      if(income <= 7000) return income * 0.20 - 500;
+      if(income <= 10000) return income * 0.25 - 850;
+      if(income <= 14000) return income * 0.30 - 1350;
+      return income * 0.35 - 2050;
     }
 
     function val(id){ return parseFloat(document.getElementById(id).value || "0") }

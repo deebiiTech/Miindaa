@@ -5,14 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deebii Offline Payroll Calculator</title>
 
-<!-- PWA Meta Tags & Icons -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#800000">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Deebii Payroll">
-<link rel="apple-touch-icon" href="DEEBII LOGO.png">
-<link rel="icon" type="image/png" href="DEEBII LOGO.png">
+<link rel="apple-touch-icon" href="DEEBII LOGO (2).jpg">
+<link rel="icon" type="image/jpeg" href="DEEBII LOGO (2).jpg">
 
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,9 +44,11 @@
     gap: 12px;
   }
   .header-logo img {
-    height: 55px;
+    height: 75px;
     width: auto;
+    max-width: 220px;
     object-fit: contain;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));
   }
   .header-title {
     font-size: 1.2rem;
@@ -210,17 +211,20 @@
     text-align: center;
   }
   .footer-logo {
-    margin-top: 10px;
-    height: 55px;
+    margin-top: 12px;
+    height: 75px;
     width: auto;
+    max-width: 220px;
     object-fit: contain;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));
   }
   footer a { color: brown; text-decoration: none; font-weight: bold; }
 
   @media (max-width: 420px) {
     body { font-size: 1rem; padding: 0 8px 16px 8px; }
     input { font-size: 1rem; }
-    .header-logo img { height: 45px; }
+    .header-logo img { height: 60px; }
+    .footer-logo { height: 60px; }
     .header-title { font-size: 0.95rem; }
   }
 </style>
@@ -229,7 +233,7 @@
 
   <header>
     <div class="header-logo">
-      <img src="DEEBII LOGO.png" alt="Deebii Logo" onerror="this.style.display='none'">
+      <img src="DEEBII LOGO (2).jpg" alt="Deebii Logo" onerror="this.style.display='none'">
       <span class="header-title">Deebii Payroll</span>
     </div>
     <div class="header-actions">
@@ -292,7 +296,7 @@
     <p>Hubachiisa: Yoo kiiboordiin mobaayila keessanii hin mul'anne ta'e, faayilii kana Chrome keessatti banaa. Dirree galtee al tokko tuqaa ykn button "Calculate" cuqaasaa.</p>
     <br>
     <p>Contact: <a href="https://www.deebiitech.com.et" target="_blank">www.deebiitech.com.et</a> | Phone: 0910166955 | Email: kajelahambisa2013@gmail.com</p>
-    <img src="DEEBII LOGO.png" alt="Deebii Logo" class="footer-logo" onerror="this.style.display='none'"><br>
+    <img src="DEEBII LOGO (2).jpg" alt="Deebii Logo" class="footer-logo" onerror="this.style.display='none'"><br>
     <em>Developed by Qajeelaa Hambisaa</em>
   </footer>
 
@@ -304,7 +308,6 @@
 
     function round2(x){ return Math.round((x + Number.EPSILON) * 100) / 100 }
 
-    // Table fakkii haaraa kenname irratti hundaa'uun sirreessuu
     function taxFromBrackets(income){
       if(isNaN(income) || income === null) return 0;
       if(income <= 2000) return 0;

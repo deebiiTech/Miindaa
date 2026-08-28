@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deebii Offline Payroll Calculator</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#800000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Deebii Payroll">
+<link rel="apple-touch-icon" href="DEEBII LOGO.png">
+<link rel="icon" type="image/png" href="DEEBII LOGO.png">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: brown;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 12px 20px 12px;
+  }
+  
+  header {
+    background-color: #ffffff;
+    color: #333;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-logo img {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+  }
+  .header-title {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .install-btn {
+    display: none;
+    background-color: brown;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .menu-btn {
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 4px 8px;
+  }
+  
+  .nav-drawer {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: #ffffff;
+    color: #333;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .nav-drawer.open { right: 0; }
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    float: right;
+    cursor: pointer;
+    color: #333;
+  }
+  .drawer-content {
+    margin-top: 40px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-weight: normal;
+  }
+  .drawer-content h3 {
+    margin-bottom: 10px;
+    border-bottom: 2px solid brown;
+    padding-bottom: 4px;
+    color: brown;
+  }
+  
+  .profile-wrapper {
+    width: 125px;
+    height: 125px;
+    margin: 15px auto 20px auto;
+    border-radius: 50%;
+    border: 3px solid brown;
+    overflow: hidden;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+  .profile-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+  .profile-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 999;
+  }
+  .overlay.active { display: block; }
+
+  .card {
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    padding: 14px;
+    margin: 10px 0;
+    background: rgba(0,0,0,0.15);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  label { font-size: 0.9rem; display: block; }
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-top: 4px;
+  }
+  .row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 14px;
+  }
+  .out { font-weight: 700; font-size: 1.2rem; color: #fff; }
+  button.action-btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+    color: brown;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  footer {
+    background-color: #ffffff;
+    color: #333;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-weight: normal;
+    text-align: center;
+  }
+  .footer-logo {
+    margin-top: 10px;
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+  }
+  footer a { color: brown; text-decoration: none; font-weight: bold; }
+
+  @media (max-width: 420px) {
+    body { font-size: 1rem; padding: 0 8px 16px 8px; }
+    input { font-size: 1rem; }
+    .header-logo img { height: 45px; }
+    .header-title { font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="header-logo">
+      <img src="DEEBII LOGO.png" alt="Deebii Logo" onerror="this.style.display='none'">
+      <span class="header-title">Deebii Payroll</span>
+    </div>
+    <div class="header-actions">
+      <button class="install-btn" id="installApp">Install App</button>
+      <button class="menu-btn" id="openMenu">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="nav-drawer" id="drawer">
+    <button class="drawer-close" id="closeMenu">&times;</button>
+    <div class="drawer-content">
+      <h3>About</h3>
+      
+      <div class="profile-wrapper">
+        <img src="Qajoo.jpg" alt="Qajeelaa Hambisaa" id="profileImg" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
+        <div class="profile-avatar" id="avatarFallback" style="display:none;">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="brown">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+        </div>
+      </div>
+
+      <p>App'n kun Sirna Herrega Kaffaltii Mindaa (Payroll Calculator) kan dorgomaa hin qabne fi hojii salphisuudhaaf qophaa'eedha.</p>
+      <br>
+      <h3>Contact Us</h3>
+      <p><strong>Website:</strong><br><a href="https://www.deebiitech.com" target="_blank">www.deebiitech.com</a></p>
+      <p><strong>Phone:</strong><br>0910166955</p>
+      <p><strong>Email:</strong><br>kajelahambisa2013@gmail.com</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div><label for="basic">Basic Salary<br><input id="basic" name="basic" type="number" inputmode="decimal" pattern="[0-9]*" autocomplete="off" tabindex="1" value="0"></label></div>
+      <div><label for="desert">Desert Allowance<br><input id="desert" name="desert" type="number" inputmode="decimal" pattern="[0-9]*" autocomplete="off" tabindex="2" value="0"></label></div>
+      <div><label for="overtime">Overtime Allowance<br><input id="overtime" name="overtime" type="number" inputmode="decimal" pattern="[0-9]*" autocomplete="off" tabindex="3" value="0"></label></div>
+      <div><label for="transport">Transport Allowance<br><input id="transport" name="transport" type="number" inputmode="decimal" pattern="[0-9]*" autocomplete="off" tabindex="4" value="0"></label></div>
+      <div><label for="fuel">Fuel Allowance<br><input id="fuel" name="fuel" type="number" inputmode="decimal" pattern="[0-9]*" autocomplete="off" tabindex="5" value="0"></label></div>
+      <div><label for="house">House Allowance<br><input id="house" name="house" type="number" inputmode="decimal" pattern="[0-9]*" autocomplete="off" tabindex="6" value="0"></label></div>
+      <div><label for="pensionBase">Pension Base (default basic)<br><input id="pensionBase" name="pensionBase" type="number" inputmode="decimal" pattern="[0-9]*" autocomplete="off" tabindex="7" value="0"></label></div>
+    </div>
+    <div class="row">
+      <button class="action-btn" id="calc" tabindex="8">Calculate</button>
+      <button class="action-btn" id="reset" tabindex="9">Reset</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>Total Earnings: <div id="total" class="out">0.00</div></div>
+      <div>Taxable Income: <div id="taxable" class="out">0.00</div></div>
+      <div>Income Tax: <div id="tax" class="out">0.00</div></div>
+      <div>Pension (7%): <div id="pension" class="out">0.00</div></div>
+      <div>Net Salary: <div id="net" class="out">0.00</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Hubachiisa: Yoo kiiboordiin mobaayila keessanii hin mul'anne ta'e, faayilii kana Chrome keessatti banaa. Dirree galtee al tokko tuqaa ykn button "Calculate" cuqaasaa.</p>
+    <br>
+    <p>Contact: <a href="https://www.deebiitech.com" target="_blank">www.deebiitech.com</a> | Phone: 0910166955 | Email: kajelahambisa2013@gmail.com</p>
+    <img src="DEEBII LOGO.png" alt="Deebii Logo" class="footer-logo" onerror="this.style.display='none'"><br>
+    <em>Developed by Qajeelaa Hambisaa</em>
+  </footer>
+
+  <script>
+    document.querySelectorAll('input[type="number"]').forEach((el)=>{
+      el.addEventListener('touchstart', function(){ this.focus(); }, {passive:true});
+      el.addEventListener('focus', function(){ this.select(); });
+    });
+
+    function round2(x){ return Math.round((x + Number.EPSILON) * 100) / 100 }
+
+    function taxFromBrackets(income){
+      if(isNaN(income) || income === null) return 0;
+      if(income <= 600) return 0;
+      if(income <= 1650) return income * 0.10 - 60;
+      if(income <= 3200) return income * 0.15 - 142.5;
+      if(income <= 5250) return income * 0.20 - 302.5;
+      if(income <= 7800) return income * 0.25 - 565;
+      if(income <= 10900) return income * 0.30 - 955;
+      return income * 0.35 - 1500;
+    }
+
+    function val(id){ return parseFloat(document.getElementById(id).value || "0") }
+
+    function calc(){
+      const basic = val("basic");
+      const desert = val("desert");
+      const overtime = val("overtime");
+      const transport = val("transport");
+      const fuel = val("fuel");
+      const house = val("house");
+      let pensionBase = val("pensionBase");
+      if(pensionBase === 0) pensionBase = basic;
+
+      const total = basic + desert + overtime + transport + fuel + house;
+      const taxable = basic; 
+      const tax = taxFromBrackets(taxable);
+      const pension = pensionBase * 0.07;
+      const net = total - tax - pension;
+
+      document.getElementById("total").textContent = round2(total).toFixed(2);
+      document.getElementById("taxable").textContent = round2(taxable).toFixed(2);
+      document.getElementById("tax").textContent = round2(tax).toFixed(2);
+      document.getElementById("pension").textContent = round2(pension).toFixed(2);
+      document.getElementById("net").textContent = round2(net).toFixed(2);
+    }
+
+    document.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){ e.preventDefault(); calc(); }
+      });
+    });
+
+    document.getElementById("calc").addEventListener("click", calc);
+    document.getElementById("reset").addEventListener("click", () => {
+      for(const id of ["basic","desert","overtime","transport","fuel","house","pensionBase"]){
+        document.getElementById(id).value = 0;
+      }
+      for(const id of ["total","taxable","tax","pension","net"]){
+        document.getElementById(id).textContent = "0.00";
+      }
+    });
+
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    document.getElementById('openMenu').addEventListener('click', () => {
+      drawer.classList.add('open');
+      overlay.classList.add('active');
+    });
+    const closeDrawer = () => {
+      drawer.classList.remove('open');
+      overlay.classList.remove('active');
+    };
+    document.getElementById('closeMenu').addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    // --- PWA Installation Logic ---
+    let deferredPrompt;
+    const installBtn = document.getElementById('installApp');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtn.style.display = 'none';
+        }
+        deferredPrompt = null;
+      }
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

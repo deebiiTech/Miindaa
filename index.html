@@ -122,7 +122,6 @@
     color: brown;
   }
   
-  /* Profile Image Sirreeffama Haaraa */
   .profile-wrapper {
     width: 140px;
     height: 140px;
@@ -397,9 +396,12 @@
       }
     });
 
+    // --- Service Worker Registration ---
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker Registered Successfully:', reg.scope))
+          .catch(err => console.log('Service Worker Registration Failed:', err));
       });
     }
   </script>
